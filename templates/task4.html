@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <title>Animated Movie</title>
+    <style>
+        #outer-div-select-4 {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: block;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+        }
+
+        select {
+            width: 15%;
+            padding: 4px 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 5rem;
+            background-color: #4caf50;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #div-select-4{
+            margin-top: 10px;
+        }
+        #divtask4Chart{
+            width: 950px;
+            height: 800px;
+            display: block;
+            align-items: center;
+        }
+
+        body {
+            /* Set background image */
+            background-image: url('https://images2.alphacoders.com/248/248442.jpg');
+            
+            /* Set background image size */
+            background-size: cover;
+            
+            /* Set background image to cover entire viewport */
+            background-position: center;
+            
+            /* Optional: Set background color as fallback */
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Animated Movies</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="task1.html">Task 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="task2.html">Task 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="task3.html">Task 3</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="task4.html">Task 4</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div id="tab-content-4" class="class-tab-content-4">
+        <div id="outer-div-select-4">
+            <div id="div-select-4">
+                <label for="actor">Select Movie:</label>
+                <select id="actor" name="selected_actor">
+                    <option value="select">Select Movie</option>
+                    <option value="Monsters University">Monsters University</option>
+                    <option value="Cars">Cars</option>
+                    <option value="Despicable Me">Despicable Me</option>
+                    <option value="The Incredibles">The Incredibles</option>
+                    <option value="The Lion King">The Lion King</option>
+                </select>
+                <label for="keyword">Keyword:</label>
+                <select id="keyword" name="selected_keyword">
+                    <option value="select">Select a Keyword</option>
+                    <option value="kill">Threatening</option>
+                    <option value="love">Feel Good</option>
+                    <option value="documentary">Educational</option>
+                    <option value="horror">Scary</option>
+                    <option value="thrill">Exciting</option>
+                </select>
+                <input type="submit" value="Submit" id="task4-submit" onclick="getTopMovies()">
+            </div>
+        </div>
+        <div id="divtask4Chart">
+            <canvas id="task4Chart"></canvas>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>   
+    <script>
+        var myBarChart;
+        function getTopMovies()
+        {
+            var selectedActor = $("#actor").val();
+            var selectedKeyword = $("#keyword").val();
+            if (selectedActor === "select" || selectedKeyword === "select") {
+                console.log('Please select an Actor and Keyword.');
+                return;
+            }
+
+            if(myBarChart)
+                myBarChart.destroy();
+
+            fetch("submit-task-4", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: new URLSearchParams({ selected_actor: selectedActor, selected_keyword: selectedKeyword}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);  // Log the message
+                console.log(data.result);
+                var voteAverage = data.result.map(entry => entry.vote_average);
+                var movieName = data.result.map(entry => entry.movie_title);
+
+                console.log(voteAverage);
+                console.log(movieName);
+
+                var ctx = document.getElementById('task4Chart').getContext('2d');
+
+                var dynamicColors = function() {
+                    var colors = [];
+                    for (var i = 0; i < movieName.length; i++) {
+                        colors.push('rgba(' +
+                            Math.floor(Math.random() * 256) + ',' +
+                            Math.floor(Math.random() * 256) + ',' +
+                            Math.floor(Math.random() * 256) + ', 0.8)');
+                    }
+                    return colors;
+                };
+
+                myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: movieName,
+                        datasets: [{
+                            label: 'Vote Average',
+                            data: voteAverage,
+                            backgroundColor: dynamicColors(),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Error submitting data. Check the console for details.');
+            });
+        }
+    </script>
+</body>
+
+</html>
