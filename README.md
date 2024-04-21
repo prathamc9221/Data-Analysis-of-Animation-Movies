@@ -6,3 +6,9 @@
 
 <h3>Query 1: Genre Analysis of Specific Year.<h3/>
 <h4>![image](https://github.com/prathamc9221/Data-Analysis-of-Animation-Movies/assets/96642687/aef16756-7539-413c-808e-54fea334ab0a)<h4/>
+
+<h3>Query 2: Exploring Genre Preferences and Domains of Production Companies.<h3/>
+<h4>![image](https://github.com/prathamc9221/Data-Analysis-of-Animation-Movies/assets/96642687/c2f303fd-ea80-43aa-9e6a-a38b8e56ab4f)<h4/>
+
+<h3>Query 3: Deep Dive Analysis of Movie Attributes: Insights into Vote Average , Linguistic Diversity<h3/>
+<h4>![image](https://github.com/prathamc9221/Data-Analysis-of-Animation-Movies/assets/96642687/e3dfa7a2-6ba2-4b25-97d4-89c252d7ceca)<h4/>
