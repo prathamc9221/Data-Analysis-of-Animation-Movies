@@ -126,35 +126,7 @@ def get_actor_data():
     {"$sort": {"total_score": -1}}
 ]
 
-#     pipeline = [
-#     {"$match": {"production_companies": {"$regex": production_companies}, "genres": {"$ne": ""}}},  # Filter by production company and ensure genres is not empty
-#     {"$addFields": {"first_genre_word": {"$arrayElemAt": [{"$split": ["$genres", " "]}, 0]}}},
-#     {"$match": {"first_genre_word": {"$not": {"$regex": "Animation"}}}},  # Exclude documents with "Animation" genre
-#     {"$project": {"first_genre_word": 1, "tagline": 1, "popularity": 1, "revenue": 1}},
-#     {"$addFields": {"review_content_array": {"$ifNull": ["$tagline", ""]}}},  # Replace null with empty array
-#     {"$addFields": {
-#         "positive_words_count": {
-#             "$size": {
-#                 "$filter": {
-#                     "input": {"$split": [{"$toString": "$review_content_array"}, " "]},
-#                     "as": "word",
-#                     "cond": {"$in": ["$$word", positive_words_list]}
-#                 }
-#             }
-#         },
-#         "score": {
-#             "$add": [
-#                 {"$multiply": ["$popularity", 0.89]},  # Popularity contributes 89%
-#                 {"$sum": ["$positive_words_count", 0.10]},  # Positive words count contributes 10%
-#                 {"$multiply": [{"$ifNull": ["$revenue", 0]}, 0.01]}  # Revenue contributes 1%
-#             ]
-#         }
-#     }},
-#     {"$group": {"_id": "$first_genre_word", "total_score": {"$sum": "$score"}}},
-#     {"$addFields": {"genre_name": {"$ifNull": ["$_id", "Unknown"]}}},
-#     {"$project": {"_id": 0, "genre_name": 1, "total_score": 1}},
-#     {"$sort": {"total_score": -1}}
-# ]
+
 
     # Execute the aggregation pipeline
     result = list(collection.aggregate(pipeline))
