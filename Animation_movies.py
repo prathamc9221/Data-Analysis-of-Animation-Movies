@@ -149,16 +149,7 @@ def get_actor_data():
 def get_movie_data():
     selected_movie = request.form.get('selected_movie')
 
-#     pipeline = [
-#     {"$match": {"original_title": {"$regex": f"^{selected_movie}$", "$options": "i"}}},  # Exact match on movie title
-#     {"$project": {"_id": 0, "vote_average": 1, "percentage_profit": {
-#         "$cond": {
-#             "if": {"$eq": ["$budget", 0]},  # Check if budget is zero to avoid division by zero
-#             "then": None,  # Set percentage_profit to null if budget is zero
-#             "else": {"$subtract": [{"$divide": [{"$ifNull": ["$revenue", 0]}, "$budget"]}, 1]}  # Calculate percentage_profit
-#         }
-#     }}},  # Project necessary fields, excluding _id
-# ]
+
 
     pipeline = [
     {"$match": {"original_title": {"$regex": f"^{selected_movie}$", "$options": "i"}}},  # Exact match on movie title
