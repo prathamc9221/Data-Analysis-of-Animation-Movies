@@ -40,68 +40,7 @@ def task4():
 @app.route('/submit-task-1', methods=['POST'])
 def get_genre_result():
     selected_year = request.form.get('selected_year')
-
-
-
-
-    # pipeline = [
-    #     {"$match": {"release_date": {"$regex": selected_year}, "genres": {"$regex": ""}}},  
-    #     {"$project": {"genres": 1, "review_content": 1}},  
-    #     {"$addFields": {"positive_words_count": {"$size": {"$filter": {"input": {"$split": [{"$toString": "$review_content"}, " "]}, "as": "word", "cond": {"$in": ["$$word", positive_words_list]}}}}}},  
-    #     {"$group": {"_id": "$genres", "positive_words_count": {"$sum": "$positive_words_count"}}},  
-    #     {"$addFields": {"genre_name": {"$ifNull": ["$_id", "Unknown"]}}},  
-    #     {"$project": {"_id": 0, "genre_name": 1, "positive_words_count": 1}},  
-    #     {"$sort": {"positive_words_count": -1}}  
-    # ]
-    
-#     pipeline = [
-#     {"$match": {"release_date": {"$regex": selected_year}, "genres": {"$ne": ""}}},
-#     {"$addFields": {"first_genre_word": {"$arrayElemAt": [{"$split": ["$genres", ", "]}, 0]}}},
-#     {"$match": {"first_genre_word": {"$not": {"$regex": "Animation"}}}},  # Exclude documents with "Animation" genre
-#     {"$project": {"first_genre_word": 1, "overview": 1, "popularity": 1, "revenue": 1}},
-#     {"$addFields": {"review_content_array": {"$ifNull": ["$overview", ""]}}},  # Replace null with empty array
-#     {"$addFields": {
-#         "positive_words_count": {
-#             "$size": {
-#                 "$filter": {
-#                     "input": {"$split": [{"$toString": "$review_content_array"}, ", "]},
-#                     "as": "word",
-#                     "cond": {"$in": ["$$word", positive_words_list]}
-#                 }
-#             }
-#         },
-#         "score": {
-#             "$add": [
-#                 {"$multiply": ["$popularity", 0.89]},  # Popularity contributes 89%
-#                 {"$sum": ["$positive_words_count", 0.10]},  # Positive words count contributes 10%
-#                 {"$multiply": [{"$ifNull": ["$revenue", 0]}, 0.01]}  # Revenue contributes 1%
-#             ]
-#         }
-#     }},
-#     {"$group": {"_id": "$first_genre_word", "total_score": {"$sum": "$score"}}},
-#     {"$addFields": {"genre_name": {"$ifNull": ["$_id", "Unknown"]}}},
-#     {"$project": {"_id": 0, "genre_name": 1, "total_score": 1}},
-#     {"$sort": {"total_score": -1}}
-# ]
-
-    # pipeline = [
-    # {"$match": {"release_date": {"$regex": selected_year}, "genres": {"$ne": ""}}},
-    # {"$project": {"genres": 1, "review_content": 1}},
-    # {"$addFields": {"review_content_array": {"$ifNull": ["$review_content", ""]}}},  # Replace null with empty array
-    # {"$addFields": {"positive_words_count": {
-    #     "$size": {
-    #         "$filter": {
-    #             "input": {"$split": [{"$toString": "$review_content_array"}, " "]},
-    #             "as": "word",
-    #             "cond": {"$in": ["$$word", positive_words_list]}
-    #         }
-    #     }
-    # }}},
-    # {"$group": {"_id": "$genres", "positive_words_count": {"$sum": "$positive_words_count"}}},
-    # {"$addFields": {"genre_name": {"$ifNull": ["$_id", "Unknown"]}}},
-    # {"$project": {"_id": 0, "genre_name": 1, "positive_words_count": 1}},
-    # {"$sort": {"positive_words_count": -1}}
-    # ]
+  
     pipeline = [
     {"$match": {"release_date": {"$regex": selected_year}, "genres": {"$ne": ""}}},
     {"$addFields": {"genre_words": {"$split": ["$genres", ", "]}}},  # Split genres into an array
