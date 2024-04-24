@@ -1,3 +1,7 @@
 Setup MongoDB:
 For help:
 https://youtu.be/zU2l4HKT0nc?si=5Et_7q0yP9KhQ0UG
+
+
+Install below libraries of python:
+from flask, pymongo, matplotlib, datetime, pandas
