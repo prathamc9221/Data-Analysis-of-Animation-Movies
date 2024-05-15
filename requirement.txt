@@ -5,3 +5,6 @@ https://youtu.be/zU2l4HKT0nc?si=5Et_7q0yP9KhQ0UG
 
 Install below libraries of python:
 from flask, pymongo, matplotlib, datetime, pandas
+
+
+Note: if port 5001 is busy and giving error then we should try for 5002 
